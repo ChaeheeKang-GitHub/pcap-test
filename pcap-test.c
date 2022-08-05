@@ -79,14 +79,13 @@ int main(int argc, char* argv[]) {
         printf("dst port: %d\n", ntohs(tcp->th_dport));
 
         //4.Payload Data
-        if((header->caplen)>(14+(ipv4->ip_hl*4)+(tcp->th_off*4)) ){
-             printf("Payload: %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\n",*((char *)tcp + tcp->th_off*4),*((char *)tcp + tcp->th_off*4)+1,*((char *)tcp + tcp->th_off*4)+2,*((char *)tcp + tcp->th_off*4)+3,*((char *)tcp + tcp->th_off*4)+4,
-                    *((char *)tcp + tcp->th_off*4)+5,*((char *)tcp + tcp->th_off*4)+6,*((char *)tcp + tcp->th_off*4)+7,*((char *)tcp + tcp->th_off*4)+8,*((char *)tcp + tcp->th_off*4)+9);
+        if(header->caplen>54){
+            printf("Payload: %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\n",packet[53],packet[54],packet[55],packet[56],packet[57],
+                   packet[58],packet[59],packet[60],packet[61],packet[62] );
         }
         else{
-            printf("No DATA\n");
+           printf("No DATA\n");
         }
-
         printf("============================================\n");
     }
 
