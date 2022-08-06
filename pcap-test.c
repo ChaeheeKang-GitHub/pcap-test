@@ -79,12 +79,20 @@ int main(int argc, char* argv[]) {
         printf("dst port: %d\n", ntohs(tcp->th_dport));
 
         //4.Payload Data
-        if(header->caplen>54){
-            printf("Payload: %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\n",packet[53],packet[54],packet[55],packet[56],packet[57],
-                   packet[58],packet[59],packet[60],packet[61],packet[62] );
+        int size=header->caplen-54;
+        if (size==0){
+            printf("NO DATA\n");
+        }
+        else if(size<10){
+            printf("Payload: ");
+            for(int i=0;i<size;i++){
+                printf("%02x ",packet[53+i]);
+            }
+            printf("\n");
         }
         else{
-           printf("No DATA\n");
+            printf("Payload: %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\n",packet[53],packet[54],packet[55],packet[56],packet[57],
+                   packet[58],packet[59],packet[60],packet[61],packet[62] );
         }
         printf("============================================\n");
     }
